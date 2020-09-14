@@ -1,5 +1,6 @@
-import axios from 'axios';
 import { call, put } from 'redux-saga/effects';
+
+import axios from './axios';
 
 export const requestSuccess = (type) => `${type}_SUCCESS`;
 
@@ -8,15 +9,14 @@ export const requestFail = (type) => `${type}_FAIL`;
 export const requestPending = (type) => `${type}_PENDING`;
 
 const defaultHeaders = () => {
-  const tokens = localStorage.getItem('tokens');
+  const token = localStorage.getItem('token');
   let headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
 
-  axios.defaults.baseURL = process.env.REACT_APP_API_HOST;
-  if (tokens) {
-    headers['X-Access-Token'] = `Bearer ${JSON.parse(tokens)['jwt']}`;
+  if (token) {
+    headers['x-access-token'] = token;
   }
 
   return headers;
@@ -63,13 +63,13 @@ export default ({
       });
 
       successCallback && successCallback(response);
-    } catch (err) {
-      fail && fail(err);
+    } catch (error) {
+      fail && fail(error);
       yield put({
         type: requestFail(type),
-        payload: { err: err.response.data.err },
+        payload: { error: error.response.data },
       });
-      failCallback && failCallback(err.response.data);
+      failCallback && failCallback(error.response.data);
     } finally {
       finalCallback && finalCallback();
     }

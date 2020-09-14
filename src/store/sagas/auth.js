@@ -11,8 +11,9 @@ const login = request({
   type: LOGIN_REQUEST,
   method: 'post',
   path: '/access-tokens',
-  success: (res, action) => {
-    localStorage.setItem('tokens', JSON.stringify(res));
+  success: (res) => {
+    localStorage.setItem('token', res.jwt);
+    localStorage.setItem('refreshToken', res.refresh_token);
   },
 });
 
@@ -20,8 +21,9 @@ const signup = request({
   type: SIGNUP_REQUEST,
   method: 'post',
   path: '/users',
-  success: (res, action) => {
-    localStorage.setItem('tokens', JSON.stringify(res));
+  success: (res) => {
+    localStorage.setItem('token', res.jwt);
+    localStorage.setItem('refreshToken', res.refresh_token);
   },
 });
 
@@ -29,11 +31,6 @@ const getAccountInfo = request({
   type: GET_ACCOUNT_INFO_REQUEST,
   method: 'get',
   path: '/me',
-  fail: (err) => {
-    if (err.response && err.response.status === 401) {
-      localStorage.removeItem('token');
-    }
-  },
 });
 
 export default function* authSaga() {

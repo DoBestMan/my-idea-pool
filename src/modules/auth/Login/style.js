@@ -29,4 +29,7 @@ export default makeStyles(theme => ({
     color: theme.palette.primary.main,
     textDecoration: 'none',
   },
+  errorPane: {
+    marginBottom: theme.spacing(3),
+  },
 }));

@@ -16,9 +16,13 @@ function Routes() {
   const isLoggedIn = useSelector(state => !!state.auth.me);
 
   useEffect(() => {
-    dispatch(getAccountInfo({
-      final: () => setIsLoaded(true),
-    }));
+    if (localStorage.getItem('token')) {
+      dispatch(getAccountInfo({
+        final: () => setIsLoaded(true),
+      }));
+    } else {
+      setIsLoaded(true);
+    }
   }, [dispatch]);
 
   return isLoaded ? (

@@ -42,7 +42,7 @@ export default createReducer(initialState, {
     ...state,
     me: null,
     status: requestFail(LOGIN_REQUEST),
-    error: payload,
+    error: payload.error,
   }),
 
   [requestSuccess(SIGNUP_REQUEST)]: (state) => ({
@@ -54,7 +54,7 @@ export default createReducer(initialState, {
     ...state,
     me: null,
     status: requestFail(SIGNUP_REQUEST),
-    error: payload.err,
+    error: payload.error,
   }),
 
   [requestSuccess(GET_ACCOUNT_INFO_REQUEST)]: (state, { payload }) => ({
