@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
   },
   content: {
+    height: '100vh',
     flexGrow: 1,
     padding: '41px 78px',
   },
