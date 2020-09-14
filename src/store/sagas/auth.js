@@ -4,6 +4,7 @@ import {
   LOGIN_REQUEST,
   SIGNUP_REQUEST,
   GET_ACCOUNT_INFO_REQUEST,
+  LOGOUT_REQUEST,
 } from '../types';
 import request  from 'src/utils/api';
 
@@ -33,8 +34,19 @@ const getAccountInfo = request({
   path: '/me',
 });
 
+const logout = request({
+  type: LOGOUT_REQUEST,
+  method: 'delete',
+  path: '/access-tokens',
+  success: (res) => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+  },
+});
+
 export default function* authSaga() {
   yield takeLatest(LOGIN_REQUEST, login);
   yield takeLatest(SIGNUP_REQUEST, signup);
   yield takeLatest(GET_ACCOUNT_INFO_REQUEST, getAccountInfo);
+  yield takeLatest(LOGOUT_REQUEST, logout);
 }

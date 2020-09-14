@@ -4,6 +4,7 @@ import {
   LOGIN_REQUEST,
   SIGNUP_REQUEST,
   GET_ACCOUNT_INFO_REQUEST,
+  LOGOUT_REQUEST,
 } from '../types';
 import { requestSuccess, requestFail, requestPending } from 'src/utils/api';
 
@@ -23,6 +24,7 @@ const initialState = {
 export const login = createAction(LOGIN_REQUEST);
 export const signup = createAction(SIGNUP_REQUEST);
 export const getAccountInfo = createAction(GET_ACCOUNT_INFO_REQUEST);
+export const logout = createAction(LOGOUT_REQUEST);
 
 /**
  * Create reducers
@@ -61,5 +63,24 @@ export default createReducer(initialState, {
     ...state,
     me: payload,
     status: requestSuccess(GET_ACCOUNT_INFO_REQUEST),
+  }),
+
+  [requestFail(GET_ACCOUNT_INFO_REQUEST)]: (state, { payload }) => ({
+    ...state,
+    me: null,
+    status: requestFail(GET_ACCOUNT_INFO_REQUEST),
+    error: payload.error,
+  }),
+
+  [requestSuccess(LOGOUT_REQUEST)]: (state, { paylaod }) => ({
+    ...state,
+    me: null,
+    status: requestSuccess(LOGOUT_REQUEST),
+  }),
+
+  [requestFail(LOGOUT_REQUEST)]: (state, { payload }) => ({
+    ...state,
+    me: null,
+    status: requestFail(LOGOUT_REQUEST),
   }),
 });

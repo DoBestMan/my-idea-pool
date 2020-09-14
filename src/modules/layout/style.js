@@ -7,10 +7,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   logoContainer: {
-    padding: '37px 68px 0',
+    padding: '0 42px',
   },
   divider: {
-    backgroundColor: theme.palette.secondary.main,
+    marginTop: '40px',
+    marginBottom: '36px',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   drawer: {
     width: drawerWidth,
@@ -27,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: '41px 78px',
   },
+  logout: {
+    color: 'rgba(42, 56, 66, 0.65)',
+    cursor: 'pointer',
+  }
 }));
 
 export default useStyles;

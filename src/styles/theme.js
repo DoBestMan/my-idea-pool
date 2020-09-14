@@ -11,7 +11,7 @@ const defaultTheme = createMuiTheme({
     secondary: {
       ligh: 'rgba(42, 56, 66, 0.4)',
       main: 'rgba(42, 56, 66, 0.4)',
-      dark: 'rgba(42, 56, 66, 0.4)',
+      dark: 'rgba(42, 56, 66, 0.65)',
       contrastText: '#000000',
     },
     error: {

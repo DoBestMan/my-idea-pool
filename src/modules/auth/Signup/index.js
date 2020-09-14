@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 
-import { signup } from 'src/store/reducers/auth';
+import { signup, getAccountInfo } from 'src/store/reducers/auth';
 import { requestFail } from 'src/utils/api';
 import { capitalize } from 'src/utils';
 import { SIGNUP_REQUEST } from 'src/store/types';
@@ -32,7 +32,10 @@ function Signup() {
   const onSubmit = (data) => {
     dispatch(signup({
       body: data,
-      success: () => history.push('/ideas'),
+      success: () => {
+        dispatch(getAccountInfo());
+        history.push('/ideas');
+      },
     }));
   };
 
