@@ -11,7 +11,7 @@ import { ErrorMessage } from '@hookform/error-message';
 
 import useStyles from './style';
 
-function Login() {
+function Signup() {
   const classes = useStyles();
 
   const { control, handleSubmit, errors } = useForm();
@@ -23,9 +23,32 @@ function Login() {
   return (
     <>
       <Box className={classes.root}>
-        <Typography className={classes.title}>Log In</Typography>
+        <Typography className={classes.title}>Sign Up</Typography>
         
         <Box component="form" width="500px" onSubmit={handleSubmit(onSubmit)}>
+          <Box width="100%" marginTop="64px">
+            <Controller
+              as={
+                <TextField
+                  placeholder="Name"
+                  error={!!errors.name}
+                  fullWidth
+                  autoFocus
+                />
+              }
+              name="name"
+              control={control}
+              rules={{
+                required: 'This field is required',
+              }}
+              defaultValue=""
+            />
+            <ErrorMessage
+              errors={errors}
+              name="name"
+              render={({ message }) => (<Typography className={classes.error} color="error">{message}</Typography>)}
+            />
+          </Box>
           <Box width="100%" marginTop="64px">
             <Controller
               as={
@@ -34,7 +57,6 @@ function Login() {
                   placeholder="Email"
                   error={!!errors.email}
                   fullWidth
-                  autoFocus
                 />
               }
               name="email"
@@ -88,11 +110,11 @@ function Login() {
               color="primary"
               disableElevation
             >
-              LOG IN
+              SIGN UP
             </Button>
             <Typography variant="body1">
-              Don't have an account? 
-              <Link className={classes.link} to="/signup">Create an account</Link>
+              Already have an account?
+              <Link className={classes.link} to="/login">Log in</Link>
             </Typography>
           </Box>
         </Box>
@@ -101,4 +123,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;
