@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
+import Header from '../Header';
+import Empty from '../Empty';
 import { getIdeas } from 'src/store/reducers/idea';
 
 function IdeasList() {
@@ -16,7 +18,8 @@ function IdeasList() {
 
   return (
     <>
-      <h4>Ideas List</h4>
+      <Header onAdd={() => {}} />
+      <Empty />
     </>
   )
 }

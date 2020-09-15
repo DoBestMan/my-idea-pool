@@ -33,8 +33,9 @@ function Signup() {
     dispatch(signup({
       body: data,
       success: () => {
-        dispatch(getAccountInfo());
-        history.push('/ideas');
+        dispatch(getAccountInfo({
+          success: () => history.push('/ideas'),
+        }));
       },
     }));
   };
