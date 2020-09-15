@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Layout from 'src/modules/layout';
+import PrivateRoute from 'src/components/PrivateRoute';
 
 import { getAccountInfo } from 'src/store/reducers/auth';
 
 const LoginPage = lazy(() => import('../modules/auth/Login'));
 const SignupPage = lazy(() => import('../modules/auth/Signup'));
+const IdeaPage = lazy(() => import('../modules/idea/IdeasList'));
 
 function Routes() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -35,6 +37,7 @@ function Routes() {
           }} />
           <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={SignupPage} />
+          <PrivateRoute path="/ideas" component={IdeaPage} />
         </Switch>
       </Layout>
     </Suspense>
