@@ -9,7 +9,7 @@ import { getAccountInfo } from 'src/store/reducers/auth';
 
 const LoginPage = lazy(() => import('../modules/auth/Login'));
 const SignupPage = lazy(() => import('../modules/auth/Signup'));
-const IdeaPage = lazy(() => import('../modules/idea/IdeasList'));
+const IdeaPage = lazy(() => import('../modules/idea/IdeaPage'));
 
 function Routes() {
   const [isLoaded, setIsLoaded] = useState(false);
