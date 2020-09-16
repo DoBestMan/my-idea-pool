@@ -11,6 +11,10 @@ function IdeaPage() {
 
   const dispatch = useDispatch();
   const { ideas } = useSelector(state => state.idea);
+  // const ideas = [
+  //   { id: 1, content: '3D Print all your emails', impact: 10, ease: 10, confidence: 10 },
+  //   { id: 2, content: 'Print 2D', impact: 9, ease: 8, confidence: 6 },
+  // ];
 
   useEffect(() => {
     dispatch(getIdeas({
@@ -24,7 +28,6 @@ function IdeaPage() {
       impact: 10,
       ease: 10,
       confidence: 10,
-      editable: true,
     }));
   };
 

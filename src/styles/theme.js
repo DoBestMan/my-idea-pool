@@ -27,6 +27,19 @@ const defaultTheme = createMuiTheme({
         boxShadow: 'none',
       },
     },
+    MuiTableRow: {
+      root: {
+        '&:hover': {
+          backgroundColor: '#f2f2f2',
+        },
+      },
+    },
+    MuiTableCell: {
+      root: {
+        height: '81px',
+        borderBottom: 'none',
+      },
+    },
   },
 });
 
