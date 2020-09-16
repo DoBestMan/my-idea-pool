@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Box, CircularProgress } from '@material-ui/core';
 
 import Header from '../Header';
 import Empty from '../Empty';
@@ -8,17 +9,16 @@ import { getIdeas, addNewIdea } from 'src/store/reducers/idea';
 
 function IdeaPage() {
   const [page, setPage] = useState(1);
+  const [isLoaded, setIsLoaded] = useState(true);
 
   const dispatch = useDispatch();
   const { ideas } = useSelector(state => state.idea);
-  // const ideas = [
-  //   { id: 1, content: '3D Print all your emails', impact: 10, ease: 10, confidence: 10 },
-  //   { id: 2, content: 'Print 2D', impact: 9, ease: 8, confidence: 6 },
-  // ];
 
   useEffect(() => {
+    setIsLoaded(false);
     dispatch(getIdeas({
       params: { page },
+      success: () => setIsLoaded(true),
     }));
   }, [dispatch, page]);
 
@@ -44,18 +44,26 @@ function IdeaPage() {
   return (
     <>
       <Header onAdd={handleAddNewIdea} />
-      {ideas.length > 0 ? (
-        <IdeasList
-          ideas={ideas}
-          page={page}
-          onNext={handleGoToNextPage}
-          onPrev={handleGoToPrevPage}
-        />
+      {isLoaded ? (
+        <>
+          {ideas.length > 0 ? (
+            <IdeasList
+              ideas={ideas}
+              page={page}
+              onNext={handleGoToNextPage}
+              onPrev={handleGoToPrevPage}
+            />
+          ) : (
+            <Empty />
+          )}
+        </>
       ) : (
-        <Empty />
+        <Box position="absolute" top="50%" left="50%">
+          <CircularProgress size={72} color="primary" />
+        </Box>
       )}
     </>
-  )
+  );
 }
 
 export default IdeaPage;

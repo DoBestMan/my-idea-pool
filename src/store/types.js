@@ -9,3 +9,5 @@ export const UPDATE_IDEA_REQUEST = 'UPDATE_IDEA_REQUEST';
 export const DELETE_IDEA_REQUEST = 'DELETE_IDEA_REQUEST';
 export const ADD_NEW_IDEA = 'ADD_NEW_IDEA';
 export const DISCARD_NEW_IDEA = 'DISCARD_NEW_IDEA';
+export const UPDATE_FIELD = 'UPDATE_FIELD';
+export const SET_IDEA = 'SET_IDEA';
