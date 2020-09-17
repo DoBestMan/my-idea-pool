@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
   Box,
   Button,
+  CircularProgress,
   TextField,
   Typography
 } from '@material-ui/core';
@@ -21,6 +22,8 @@ import useStyles from './style';
 
 function Signup() {
   const classes = useStyles();
+
+  const [submitting, setSubmitting] = useState(false);
   
   const dispatch = useDispatch();
   const { error: authError, status: authStatus } = useSelector(state => state.auth);
@@ -30,6 +33,7 @@ function Signup() {
   const { control, handleSubmit, errors } = useForm();
 
   const onSubmit = (data) => {
+    setSubmitting(true);
     dispatch(signup({
       body: data,
       success: () => {
@@ -143,7 +147,11 @@ function Signup() {
               color="primary"
               disableElevation
             >
-              SIGN UP
+              {submitting ? (
+                <CircularProgress size={24} style={{ color: 'white' }} />
+              ) : (
+                'SIGN UP'
+              )}
             </Button>
             <Typography variant="body1">
               Already have an account?

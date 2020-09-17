@@ -38,8 +38,6 @@ function IdeasList({
   ideas,
   page,
   fetchIdeas,
-  onNext,
-  onPrev,
 }) {
   const classes = useStyles();
 

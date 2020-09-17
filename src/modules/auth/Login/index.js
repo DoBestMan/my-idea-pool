@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
   Box,
   Button,
+  CircularProgress,
   TextField,
   Typography
 } from '@material-ui/core';
@@ -22,6 +23,8 @@ import useStyles from './style';
 function Login() {
   const classes = useStyles();
 
+  const [submitting, setSubmitting] = useState(false);
+
   const dispatch = useDispatch();
   const { error: authError, status: authStatus } = useSelector(state => state.auth);
 
@@ -30,6 +33,7 @@ function Login() {
   const { control, handleSubmit, errors } = useForm();
 
   const onSubmit = (data) => {
+    setSubmitting(true);
     dispatch(login({
       body: data,
       success: () => {
@@ -121,7 +125,11 @@ function Login() {
               color="primary"
               disableElevation
             >
-              LOG IN
+              {submitting ? (
+                <CircularProgress size={24} style={{ color: 'white' }}/>
+              ) : (
+                'LOG IN'
+              )}
             </Button>
             <Typography variant="body1">
               Don't have an account? 

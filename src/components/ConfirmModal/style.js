@@ -8,7 +8,7 @@ export default makeStyles(theme => ({
     bottom: 0,
     right: 0,
     zIndex: 1000,
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(0, 0, 0, .1)',
   },
   modal: {
     position: 'absolute',
