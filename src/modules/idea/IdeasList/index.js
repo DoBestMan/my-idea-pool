@@ -17,8 +17,10 @@ import {
   Close as CloseIcon,
   Edit as EditIcon,
   DeleteForever as DeleteIcon,
+  FiberManualRecord as DotIcon,
 } from '@material-ui/icons';
 
+import ConfirmModal from 'src/components/ConfirmModal';
 import {
   createIdea,
   updateIdea,
@@ -32,10 +34,17 @@ import useStyles from './style';
 
 const OPTIONS = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
-function IdeasList({ ideas, page, onNext, onPrev }) {
+function IdeasList({
+  ideas,
+  page,
+  fetchIdeas,
+  onNext,
+  onPrev,
+}) {
   const classes = useStyles();
 
   const [selectIndex, setSelectIndex] = useState(-1);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const dispatch = useDispatch();
   const { idea } = useSelector(state => state.idea);
@@ -44,6 +53,7 @@ function IdeasList({ ideas, page, onNext, onPrev }) {
     if (selectIndex === -1) {
       dispatch(createIdea({
         body: idea,
+        success: () => fetchIdeas(),
       }));
     } else {
       dispatch(updateIdea({
@@ -69,10 +79,13 @@ function IdeasList({ ideas, page, onNext, onPrev }) {
     dispatch(setIdea(ideas[index]));
   };
 
-  const handleDeleteIdea = (index) => () => {
+  const handleDeleteIdea = () => {
     dispatch(deleteIdea({
-      id: ideas[index].id,
+      id: ideas[selectIndex].id,
+      success: fetchIdeas,
     }));
+    setSelectIndex(-1);
+    setShowConfirmModal(false);
   };
 
   const handleChange = (event) => {
@@ -81,14 +94,24 @@ function IdeasList({ ideas, page, onNext, onPrev }) {
       key: name,
       value,
     }));
-  }
+  };
+
+  const handleOpenConfirmModal = (index) => () => {
+    setSelectIndex(index);
+    setShowConfirmModal(true);
+  };
+
+  const handleCloseConfirmModal = () => {
+    setSelectIndex(-1);
+    setShowConfirmModal(false);
+  };
 
   const renderRow = (item, index) => {
-    if (!item.id || selectIndex === index) {
+    if ((!item.id || selectIndex === index) && !showConfirmModal) {
       return (
         <TableRow key={`IDEA_${index}`}>
           <TableCell>
-            <Typography variant="body1" color="secondary">•</Typography>
+            <DotIcon className={classes.dot} color="secondary" />
           </TableCell>
           <TableCell>
             <TextField
@@ -168,7 +191,7 @@ function IdeasList({ ideas, page, onNext, onPrev }) {
     return (
       <TableRow key={item.id} className={classes.tableRow}>
         <TableCell>
-          <Typography variant="body1" color="secondary">•</Typography>
+          <DotIcon className={classes.dot} color="secondary" />
         </TableCell>
         <TableCell>
           <Typography variant="body1">{item.content}</Typography>
@@ -187,11 +210,11 @@ function IdeasList({ ideas, page, onNext, onPrev }) {
         </TableCell>
         <TableCell>
           {!idea && (
-            <Box className={classes.actions}>
+            <Box className="actions">
               <IconButton onClick={handleSelectIndex(index)}>
                 <EditIcon color="primary" />
               </IconButton>
-              <IconButton onClick={handleDeleteIdea(index)}>
+              <IconButton onClick={handleOpenConfirmModal(index)}>
                 <DeleteIcon color="primary" />
               </IconButton>
             </Box>
@@ -204,7 +227,7 @@ function IdeasList({ ideas, page, onNext, onPrev }) {
   return (
     <>
       <Box marginTop="36px">
-        <Table stickyHeader aria-label="ideas table">
+        <Table stickyHeader size="small" aria-label="ideas table">
           <TableHead>
             <TableRow>
               <TableCell style={{ width: '40px' }}></TableCell>
@@ -221,6 +244,13 @@ function IdeasList({ ideas, page, onNext, onPrev }) {
           </TableBody>
         </Table>
       </Box>
+      <ConfirmModal
+        show={showConfirmModal}
+        title="Are you sure?"
+        text="This idea will be permanently deleted."
+        onConfirm={handleDeleteIdea}
+        onCancel={handleCloseConfirmModal}
+      />
     </>
   )
 }

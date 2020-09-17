@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, CircularProgress } from '@material-ui/core';
 
@@ -14,13 +14,17 @@ function IdeaPage() {
   const dispatch = useDispatch();
   const { ideas } = useSelector(state => state.idea);
 
-  useEffect(() => {
+  const fetchIdeas = useCallback(() => {
     setIsLoaded(false);
     dispatch(getIdeas({
       params: { page },
       success: () => setIsLoaded(true),
     }));
   }, [dispatch, page]);
+
+  useEffect(() => {
+    fetchIdeas();
+  }, [fetchIdeas]);
 
   const handleAddNewIdea = () => {
     dispatch(addNewIdea({
@@ -50,6 +54,7 @@ function IdeaPage() {
             <IdeasList
               ideas={ideas}
               page={page}
+              fetchIdeas={fetchIdeas}
               onNext={handleGoToNextPage}
               onPrev={handleGoToPrevPage}
             />

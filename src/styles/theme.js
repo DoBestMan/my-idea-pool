@@ -36,7 +36,7 @@ const defaultTheme = createMuiTheme({
     },
     MuiTableCell: {
       root: {
-        height: '81px',
+        height: '60px',
         borderBottom: 'none',
       },
     },
