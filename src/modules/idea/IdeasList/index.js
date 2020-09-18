@@ -57,6 +57,7 @@ function IdeasList({
       dispatch(updateIdea({
         id: idea.id,
         body: idea,
+        success: () => fetchIdeas(),
       }));
       setSelectIndex(-1);
     }

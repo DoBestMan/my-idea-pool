@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Layout from 'src/modules/layout';
 import PrivateRoute from 'src/components/PrivateRoute';
+import PublicRoute from 'src/components/PublicRoute';
 
 import { getAccountInfo } from 'src/store/reducers/auth';
 
@@ -35,8 +36,8 @@ function Routes() {
             if (isLoggedIn) return <Redirect to="/ideas" />;
             return <Redirect to="/login" />;
           }} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/signup" component={SignupPage} />
+          <PublicRoute path="/login" component={LoginPage} />
+          <PublicRoute path="/signup" component={SignupPage} />
           <PrivateRoute path="/ideas" component={IdeaPage} />
         </Switch>
       </Layout>
